@@ -172,3 +172,5 @@ tables/*
 ResultAnalysis.ipynb
 Results.ipynb
 featureresult/*
+README.txt
+models/*
