@@ -5,7 +5,7 @@ from utils import *
 from sklearn.model_selection import train_test_split
 from torch import nn
 
-# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_5.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre_pointnet_5_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre_pointnet_5_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_5.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre_pointnet_5_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_5_test_pre.pkl'
 
 import argparse
 ap = argparse.ArgumentParser()
