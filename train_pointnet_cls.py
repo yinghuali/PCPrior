@@ -19,6 +19,7 @@ ap.add_argument("--save_model_path", type=str)
 args = ap.parse_args()
 
 # python train_pointnet_cls.py --k 40 --epochs 26 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointnet'
+# python train_pointnet_cls.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointnet'
 
 
 def main():
@@ -68,7 +69,7 @@ def main():
         epoch_acc = all_correct*1.0 / len(train_x)
         print('epoch_acc =', epoch_acc)
 
-        if e % 5 == 0 and e > 0:
+        if e % 2 == 0 and e > 0:
             torch.save(classifier, args.save_model_path + '_' + str(e) + '.pt')
 
 
