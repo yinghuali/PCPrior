@@ -12,6 +12,7 @@ from torch import nn
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_25.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_25_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_25_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_4.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_4_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_4_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_6.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_6_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_6_test_pre.pkl'
 
 
 import argparse
@@ -60,8 +61,6 @@ def main():
 
     all_pre_vec = np.concatenate(all_pre_vec, axis=0)
     pickle.dump(all_pre_vec, open(args.save_train_vec, 'wb'), protocol=4)
-    print('all_pre_vec.shape:', all_pre_vec.shape)
-    print('train_x.shape', train_x.shape)
     print('train_acc=', all_correct_n*1.0/len(train_x))
 
     all_correct_n = 0
@@ -89,8 +88,6 @@ def main():
 
     all_pre_vec = np.concatenate(all_pre_vec, axis=0)
     pickle.dump(all_pre_vec, open(args.save_test_vec, 'wb'), protocol=4)
-    print('all_pre_vec.shape:', all_pre_vec.shape)
-    print('test_x.shape', test_x.shape)
     print('test_acc=', all_correct_n * 1.0 / len(test_x))
 
 

@@ -5,7 +5,7 @@ from scipy.stats import entropy
 def get_sapce_feature(x):
     space_feature = []
     for i in x:
-        space_feature.append(i.mean(axis=1))
+        space_feature.append(i.mean(axis=0))
     space_feature = np.array(space_feature)
     return space_feature
 

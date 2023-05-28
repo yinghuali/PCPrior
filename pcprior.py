@@ -5,7 +5,11 @@ import numpy as np
 from utils import *
 from sklearn.model_selection import train_test_split
 from get_rank_idx import *
+from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import PolynomialFeatures
 
 path_x = '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
 path_y = '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
@@ -33,12 +37,17 @@ def main():
     uncertainty_feature_test_x = get_uncertainty_feature(pre_feature_test_x)
 
 
+    # concat_train_all_feature = np.hstack((pre_feature_train_x, uncertainty_feature_train_x))
+    # concat_test_all_feature = np.hstack((pre_feature_test_x, uncertainty_feature_test_x))
+
     concat_train_all_feature = np.hstack((space_feature_train_x, pre_feature_train_x, uncertainty_feature_train_x))
     concat_test_all_feature = np.hstack((space_feature_test_x, pre_feature_test_x, uncertainty_feature_test_x))
 
-
     target_train_pre = pre_feature_train_x.argsort()[:, -1]
     target_test_pre = pre_feature_test_x.argsort()[:, -1]
+
+    print('train acc', accuracy_score(target_train_pre, train_y))
+    print('test acc', accuracy_score(target_test_pre, test_y))
 
     miss_train_label, miss_test_label, idx_miss_test_list = get_miss_lable(target_train_pre, target_test_pre, train_y, test_y)
 
@@ -47,6 +56,20 @@ def main():
     y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
     lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
 
+    model = XGBClassifier()
+    model.fit(concat_train_all_feature, miss_train_label)
+    y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+    xgb_rank_idx = y_concat_all.argsort()[::-1].copy()
+
+    model = RandomForestClassifier()
+    model.fit(concat_train_all_feature, miss_train_label)
+    y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+    rf_rank_idx = y_concat_all.argsort()[::-1].copy()
+
+    model = LGBMClassifier()
+    model.fit(concat_train_all_feature, miss_train_label)
+    y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+    lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
 
     deepGini_rank_idx = DeepGini_rank_idx(pre_feature_test_x)
     vanillasoftmax_rank_idx = VanillaSoftmax_rank_idx(pre_feature_test_x)
@@ -61,6 +84,8 @@ def main():
     entropy_apfd = apfd(idx_miss_test_list, entropy_rank_idx)
 
     lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+    # xgb_apfd = apfd(idx_miss_test_list, xgb_rank_idx)
+    # rf_apfd = apfd(idx_miss_test_list, rf_rank_idx)
 
     print('random_apfd', random_apfd)
     print('deepGini_apfd', deepGini_apfd)
@@ -68,12 +93,12 @@ def main():
     print('pcs_apfd', pcs_apfd)
     print('entropy_apfd', entropy_apfd)
     print('lgb_apfd', lgb_apfd)
+    # print('xgb_apfd', xgb_apfd)
+    # print('rf_apfd', rf_apfd)
 
 
 if __name__ == '__main__':
     main()
-
-
 
 
 
