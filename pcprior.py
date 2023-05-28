@@ -84,8 +84,8 @@ def main():
     entropy_apfd = apfd(idx_miss_test_list, entropy_rank_idx)
 
     lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
-    # xgb_apfd = apfd(idx_miss_test_list, xgb_rank_idx)
-    # rf_apfd = apfd(idx_miss_test_list, rf_rank_idx)
+    xgb_apfd = apfd(idx_miss_test_list, xgb_rank_idx)
+    rf_apfd = apfd(idx_miss_test_list, rf_rank_idx)
 
     print('random_apfd', random_apfd)
     print('deepGini_apfd', deepGini_apfd)
@@ -93,8 +93,8 @@ def main():
     print('pcs_apfd', pcs_apfd)
     print('entropy_apfd', entropy_apfd)
     print('lgb_apfd', lgb_apfd)
-    # print('xgb_apfd', xgb_apfd)
-    # print('rf_apfd', rf_apfd)
+    print('xgb_apfd', xgb_apfd)
+    print('rf_apfd', rf_apfd)
 
 
 if __name__ == '__main__':
