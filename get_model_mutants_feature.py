@@ -85,10 +85,11 @@ def get_model_mutants_feature(path_mutants_dir, path_x, path_y, save_train_model
     pickle.dump(test_model_mutants_feature_vec, open(save_test_model_mutants_feature_vec, 'wb'), protocol=4)
 
 
-get_model_mutants_feature(args.path_mutants_dir,
-                          args.path_x,
-                          args.path_y,
-                          args.save_train_model_mutants_feature_vec,
-                          args.save_test_model_mutants_feature_vec
-                          )
+if __name__ == '__main__':
+    get_model_mutants_feature(args.path_mutants_dir,
+                              args.path_x,
+                              args.path_y,
+                              args.save_train_model_mutants_feature_vec,
+                              args.save_test_model_mutants_feature_vec
+                              )
 
