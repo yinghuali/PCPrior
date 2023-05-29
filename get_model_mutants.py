@@ -31,7 +31,7 @@ def get_model_mutants(target_model_path, save_model_path):
         select_row = random.sample(range(row_n), 100)
         select_col = random.sample(range(col_n), 100)
         for i in range(len(select_row)):
-            model.state_dict()[select_key][select_row[i]][select_col[i]] +=random.uniform(-1, 1)
+            model.state_dict()[select_key][select_row[i]][select_col[i]] += random.uniform(-1, 1)
     except:
         pass
     torch.save(model, save_model_path)
