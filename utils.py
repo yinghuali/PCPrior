@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 
 def apfd(error_idx_list, pri_idx_list):
@@ -68,3 +69,12 @@ def farthest_point_sample(point, npoint):
     return point
 
 
+def get_model_path(path_dir_compile):
+    path_list = []
+    if os.path.isdir(path_dir_compile):
+        for root, dirs, files in os.walk(path_dir_compile, topdown=True):
+            for file in files:
+                file_absolute_path = os.path.join(root, file)
+                if file_absolute_path.endswith('.pt'):
+                    path_list.append(file_absolute_path)
+    return path_list

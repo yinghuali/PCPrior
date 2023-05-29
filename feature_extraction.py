@@ -1,8 +1,11 @@
 import numpy as np
 import torch
+from torch import nn
 import pickle
-
 from scipy.stats import entropy
+from utils import get_model_path, get_correct_n
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 
 def get_sapce_feature(x):
@@ -25,15 +28,9 @@ def get_uncertainty_feature(x):
     return feature_vec.T
 
 
-def get_mutants_point_feaure(path_x_all_mutants, path_model):
-    model = torch.load(path_model)
-    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
-    model.to(device)
-    x_all_mutants = pickle.load(open(path_x_all_mutants, 'rb'))
-    print(x_all_mutants.shape)
 
 
-get_mutants_point_feaure('/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl', './target_models/modelnet40_pointnet_2.pt')
+
 
 
 

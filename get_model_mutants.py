@@ -21,19 +21,19 @@ def get_model_mutants(target_model_path, save_model_path):
 
     new_key_list = []
     for key in key_list:
-        if len(param[key].shape) == 1:
+        if len(param[key].shape) == 2:
             new_key_list.append(key)
 
     select_key = random.sample(new_key_list, 1)[0]
-    n_vector = param[select_key].shape[0]
-    random_list = [random.uniform(-1, 1) for _ in range(n_vector)]
-    select_idx_list = random.sample(range(n_vector), int(n_vector*0.9))
-    for idx in select_idx_list:
-        random_list[idx] = 0
-
-    random_t = torch.from_numpy(np.array(random_list))
-    model.state_dict()[select_key] += random_t
-
+    row_n = param[select_key].shape[0]
+    col_n = param[select_key].shape[1]
+    try:
+        select_row = random.sample(range(row_n), 100)
+        select_col = random.sample(range(col_n), 100)
+        for i in range(len(select_row)):
+            model.state_dict()[select_key][select_row[i]][select_col[i]] +=random.uniform(-1, 1)
+    except:
+        pass
     torch.save(model, save_model_path)
 
 
