@@ -1,4 +1,7 @@
 import numpy as np
+import torch
+import pickle
+
 from scipy.stats import entropy
 
 
@@ -20,6 +23,17 @@ def get_uncertainty_feature(x):
 
     feature_vec = np.vstack((margin_score, gini_score, least_score, VanillaSoftmax_score, PCS_score, entropy_score))
     return feature_vec.T
+
+
+def get_mutants_point_feaure(path_x_all_mutants, path_model):
+    model = torch.load(path_model)
+    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    x_all_mutants = pickle.load(open(path_x_all_mutants, 'rb'))
+    print(x_all_mutants.shape)
+
+
+get_mutants_point_feaure('/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl', './target_models/modelnet40_pointnet_2.pt')
 
 
 
