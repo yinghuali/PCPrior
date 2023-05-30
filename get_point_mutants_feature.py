@@ -12,28 +12,35 @@ ap.add_argument("--path_x_all_mutants", type=str)
 ap.add_argument("--path_y", type=str)
 ap.add_argument("--save_train_point_mutants_feature_vec", type=str)
 ap.add_argument("--save_test_point_mutants_feature_vec", type=str)
+ap.add_argument("--path_target_train_pre", type=str)
+ap.add_argument("--path_target_test_pre", type=str)
 args = ap.parse_args()
 
 
-# nohup python get_point_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/modelnet40_pointnet_2.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' > /dev/null 2>&1 &
+# nohup python get_point_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/modelnet40_pointnet_2.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' > /dev/null 2>&1 &
 
 
-def get_diff_feature(y, y_pre):
+def get_diff_feature(target_y, y_pre):
     vec = []
-    for i in range(len(y)):
-        if y[i] != y_pre[i]:
+    for i in range(len(target_y)):
+        if target_y[i] != y_pre[i]:
             vec.append(1)
         else:
             vec.append(0)
     return vec
 
 
-def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, save_train_point_mutants_feature_vec, save_test_point_mutants_feature_vec):
+def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, save_train_point_mutants_feature_vec, save_test_point_mutants_feature_vec, path_target_train_pre, path_target_test_pre):
     device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
     data = pickle.load(open(path_x_all_mutants, 'rb'))
     y = pickle.load(open(path_y, 'rb'))
     model = torch.load(path_target_model)
     model.to(device)
+
+    target_train_pre = pickle.load(open(path_target_train_pre, 'rb'))
+    target_test_pre = pickle.load(open(path_target_test_pre, 'rb'))
+    target_train_pre = target_train_pre.argsort()[:, -1]
+    target_test_pre = target_test_pre.argsort()[:, -1]
 
     all_feature_vec = []
     for x in data:
@@ -52,7 +59,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
             all_pre_vec += y_pre
             left += 16
         all_pre_vec = np.array(all_pre_vec)
-        feature_vec = get_diff_feature(train_y, all_pre_vec)
+        feature_vec = get_diff_feature(target_train_pre, all_pre_vec)
         all_feature_vec.append(feature_vec)
 
     all_feature_vec = np.array(all_feature_vec)
@@ -76,7 +83,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
             all_pre_vec += y_pre
             left += 16
         all_pre_vec = np.array(all_pre_vec)
-        feature_vec = get_diff_feature(test_y, all_pre_vec)
+        feature_vec = get_diff_feature(target_test_pre, all_pre_vec)
         all_feature_vec.append(feature_vec)
 
     all_feature_vec = np.array(all_feature_vec)
@@ -89,5 +96,8 @@ if __name__ == '__main__':
                               args.path_x_all_mutants,
                               args.path_y,
                               args.save_train_point_mutants_feature_vec,
-                              args.save_test_point_mutants_feature_vec)
+                              args.save_test_point_mutants_feature_vec,
+                              args.path_target_train_pre,
+                              args.path_target_test_pre
+                              )
 
