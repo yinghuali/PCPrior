@@ -3,15 +3,27 @@ import torch
 from torch import nn
 import pickle
 from scipy.stats import entropy
-from utils import get_model_path, get_correct_n
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from scipy.stats import skew, kurtosis
 
 
 def get_sapce_feature(x):
     space_feature = []
     for i in x:
-        space_feature.append(i.mean(axis=0))
+        var = i.var(axis=0)
+        std = i.std(axis=0)
+        mean = i.mean(axis=0)
+        median = np.median(i, axis=0)
+        diff = np.array([i[:, j].max() - i[:, j].min() for j in range(len(i[0]))])
+        sk = skew(i, axis=0)
+        ku = kurtosis(i, axis=0)
+        mi = i.min(axis=0)
+        ma = i.max(axis=0)
+        p_q1 = np.percentile(i, 25, axis=0)
+        p_q3 = np.percentile(i, 75, axis=0)
+        abs = np.abs(i.mean(axis=0) - i).mean(axis=0)
+        feature = np.hstack((var, std, mean, median, diff, sk, ku, mi, ma, p_q1, p_q3, abs))
+        space_feature.append(feature)
+
     space_feature = np.array(space_feature)
     return space_feature
 
