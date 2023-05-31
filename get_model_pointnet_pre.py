@@ -8,6 +8,8 @@ from torch import nn
 
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_msg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_ssg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_dgcnn_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_test_pre.pkl'
 
 
 import argparse
@@ -24,7 +26,7 @@ args = ap.parse_args()
 def main():
 
     model = torch.load(args.model_path)
-    device = torch.device('cuda:1' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     x = pickle.load(open(args.path_x, 'rb'))
