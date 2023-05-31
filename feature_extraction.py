@@ -4,6 +4,7 @@ from torch import nn
 import pickle
 from scipy.stats import entropy
 from scipy.stats import skew, kurtosis
+from utils import farthest_point_sample
 
 
 def get_sapce_feature(x):
@@ -38,10 +39,6 @@ def get_uncertainty_feature(x):
 
     feature_vec = np.vstack((margin_score, gini_score, least_score, VanillaSoftmax_score, PCS_score, entropy_score))
     return feature_vec.T
-
-
-
-
 
 
 
