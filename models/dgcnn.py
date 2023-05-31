@@ -18,6 +18,7 @@ def knn(x, k):
 
 
 def get_graph_feature(x, k=20, idx=None):
+    # x.shape=torch.Size([16, 6, 1024])
     batch_size = x.size(0)
     num_points = x.size(2)
     x = x.view(batch_size, -1, num_points)
@@ -47,14 +48,13 @@ class DGCNN(nn.Module):
     def __init__(self, k=40):
         super(DGCNN, self).__init__()
         emb_dims = 1024
-        self.k = k
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(64)
         self.bn3 = nn.BatchNorm2d(128)
         self.bn4 = nn.BatchNorm2d(256)
         self.bn5 = nn.BatchNorm1d(emb_dims)
 
-        self.conv1 = nn.Sequential(nn.Conv2d(6, 64, kernel_size=1, bias=False),
+        self.conv1 = nn.Sequential(nn.Conv2d(12, 64, kernel_size=1, bias=False),
                                    self.bn1,
                                    nn.LeakyReLU(negative_slope=0.2))
         self.conv2 = nn.Sequential(nn.Conv2d(64 * 2, 64, kernel_size=1, bias=False),
@@ -79,19 +79,19 @@ class DGCNN(nn.Module):
 
     def forward(self, x):
         batch_size = x.size(0)
-        x = get_graph_feature(x, k=self.k)
+        x = get_graph_feature(x)
         x = self.conv1(x)
         x1 = x.max(dim=-1, keepdim=False)[0]
 
-        x = get_graph_feature(x1, k=self.k)
+        x = get_graph_feature(x1)
         x = self.conv2(x)
         x2 = x.max(dim=-1, keepdim=False)[0]
 
-        x = get_graph_feature(x2, k=self.k)
+        x = get_graph_feature(x2)
         x = self.conv3(x)
         x3 = x.max(dim=-1, keepdim=False)[0]
 
-        x = get_graph_feature(x3, k=self.k)
+        x = get_graph_feature(x3)
         x = self.conv4(x)
         x4 = x.max(dim=-1, keepdim=False)[0]
 
@@ -108,3 +108,4 @@ class DGCNN(nn.Module):
         x = self.dp2(x)
         x = self.linear3(x)
         return x
+

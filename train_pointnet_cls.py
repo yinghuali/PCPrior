@@ -18,7 +18,6 @@ ap.add_argument("--batch_size", type=int)
 ap.add_argument("--save_model_path", type=str)
 args = ap.parse_args()
 
-# python train_pointnet_cls.py --k 40 --epochs 26 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointnet'
 # python train_pointnet_cls.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointnet'
 
 

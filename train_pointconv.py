@@ -1,13 +1,12 @@
 import pickle
 import torch
 import argparse
-from models.dgcnn import DGCNN
+import provider
+from models.pointconv import PointConvDensityClsSsg as PointConvClsSsg
 from torch import nn, optim
 from tqdm import tqdm
-from torch.autograd import Variable
 import torch.utils.data as Data
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 ap = argparse.ArgumentParser()
 
 ap.add_argument("--epochs", type=int)
@@ -18,7 +17,7 @@ ap.add_argument("--batch_size", type=int)
 ap.add_argument("--save_model_path", type=str)
 args = ap.parse_args()
 
-# python train_dgcnn.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_dgcnn'
+# python train_pointconv.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointconv'
 
 
 def main():
@@ -37,7 +36,7 @@ def main():
     dataset = Data.TensorDataset(x_train_t, y_train_t)
     trainDataLoader = Data.DataLoader(dataset=dataset, batch_size=args.batch_size, shuffle=True)
 
-    classifier = DGCNN(k=args.k)
+    classifier = PointConvClsSsg(num_classes=args.k)
     classifier.to(device)
     train_params = classifier.parameters()
     optimizer = optim.SGD(train_params, lr=0.001, momentum=0.9, weight_decay=5e-4)
@@ -50,15 +49,25 @@ def main():
         scheduler.step()
         all_correct = 0
         for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
-            points = points.permute(0, 2, 1)
+
+            points = points.data.numpy()
+            jittered_data = provider.random_scale_point_cloud(points[:,:, 0:3], scale_low=2.0/3, scale_high=3/2.0)
+            jittered_data = provider.shift_point_cloud(jittered_data, shift_range=0.2)
+            points[:, :, 0:3] = jittered_data
+            points = provider.random_point_dropout_v2(points)
+            provider.shuffle_points(points)
+            points = torch.Tensor(points)
+
+            points = points.transpose(2, 1)
+            points, target = points.to(device), target.to(device)
+
             optimizer.zero_grad()
-            points = points.to(device)
-            target = target.to(device)
-            pred = classifier(points)
+            pred = classifier(points[:, :3, :], points[:, 3:, :])
+
             loss = criterion(pred, target)
             loss.backward()
             optimizer.step()
-
+            
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.long().data).cpu().sum()
             all_correct += correct
