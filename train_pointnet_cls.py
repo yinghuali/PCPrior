@@ -19,7 +19,7 @@ ap.add_argument("--save_model_path", type=str)
 args = ap.parse_args()
 
 # python train_pointnet_cls.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointnet'
-
+# python train_pointnet_cls.py --k 50 --epochs 2 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl' --save_model_path './target_models/shapenet_pointnet'
 
 def main():
     device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
@@ -27,11 +27,12 @@ def main():
     x = pickle.load(open(args.path_x, 'rb'))
     y = pickle.load(open(args.path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
+    # train_x, _, train_y, _ = train_test_split(train_x, train_y, test_size=0.5, random_state=17)
 
-    x_train_t = torch.from_numpy(train_x)
+    x_train_t = torch.from_numpy(train_x).float()
     y_train_t = torch.from_numpy(train_y)
 
-    x_test_t = torch.from_numpy(test_x)
+    x_test_t = torch.from_numpy(test_x).float()
     y_test_t = torch.from_numpy(test_y)
 
     dataset = Data.TensorDataset(x_train_t, y_train_t)
@@ -68,8 +69,7 @@ def main():
         epoch_acc = all_correct*1.0 / len(train_x)
         print('epoch_acc =', epoch_acc)
 
-        if e % 2 == 0 and e > 0:
-            torch.save(classifier, args.save_model_path + '_' + str(e) + '.pt')
+        torch.save(classifier, args.save_model_path + '_' + str(e) + '.pt')
 
 
 if __name__ == '__main__':

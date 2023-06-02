@@ -9,8 +9,8 @@ from torch import nn
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_msg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_ssg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_test_pre.pkl'
-# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_dgcnn_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_test_pre.pkl'
 
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_test_pre.pkl'
 
 import argparse
 ap = argparse.ArgumentParser()
@@ -40,7 +40,7 @@ def main():
     while left < len(train_x):
         train_select = train_x[left:left+16, ]
         train_select_y = train_y[left:left + 16]
-        x_train_t = torch.from_numpy(train_select).to(device)
+        x_train_t = torch.from_numpy(train_select).to(device).float()
         x_train_t = x_train_t.transpose(2, 1)
 
         with torch.no_grad():
@@ -67,7 +67,7 @@ def main():
     while left < len(test_x):
         test_select = test_x[left:left + 16, ]
         test_select_y = test_y[left:left + 16]
-        x_test_t = torch.from_numpy(test_select).to(device)
+        x_test_t = torch.from_numpy(test_select).to(device).float()
         x_test_t = x_test_t.transpose(2, 1)
 
         with torch.no_grad():

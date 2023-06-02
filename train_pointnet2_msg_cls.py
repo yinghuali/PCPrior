@@ -68,8 +68,7 @@ def main():
         epoch_acc = all_correct*1.0 / len(train_x)
         print('epoch_acc =', epoch_acc)
 
-        if e % 2 == 0 and e > 0:
-            torch.save(classifier, args.save_model_path + '_' + str(e) + '.pt')
+        torch.save(classifier, args.save_model_path + '_' + str(e) + '.pt')
 
 
 if __name__ == '__main__':
