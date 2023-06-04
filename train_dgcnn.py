@@ -28,10 +28,10 @@ def main():
     y = pickle.load(open(args.path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
 
-    x_train_t = torch.from_numpy(train_x)
+    x_train_t = torch.from_numpy(train_x).float()
     y_train_t = torch.from_numpy(train_y)
 
-    x_test_t = torch.from_numpy(test_x)
+    x_test_t = torch.from_numpy(test_x).float()
     y_test_t = torch.from_numpy(test_y)
 
     dataset = Data.TensorDataset(x_train_t, y_train_t)

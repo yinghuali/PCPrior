@@ -44,7 +44,7 @@ def main():
         x_train_t = torch.Tensor(x_train_t)
 
         x_train_t = x_train_t.transpose(2, 1)
-        x_train_t = x_train_t.to(device)
+        x_train_t = x_train_t.to(device).float()
 
         with torch.no_grad():
             pred = model(x_train_t[:, :3, :], x_train_t[:, 3:, :])
@@ -79,7 +79,7 @@ def main():
         x_test_t = torch.Tensor(x_test_t)
 
         x_test_t = x_test_t.transpose(2, 1)
-        x_test_t = x_test_t.to(device)
+        x_test_t = x_test_t.to(device).float()
 
         with torch.no_grad():
             pred = model(x_test_t[:, :3, :], x_test_t[:, 3:, :])

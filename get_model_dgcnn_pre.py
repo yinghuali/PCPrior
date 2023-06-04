@@ -35,7 +35,7 @@ def main():
     while left < len(train_x):
         train_select = train_x[left:left+16, ]
         train_select_y = train_y[left:left + 16]
-        x_train_t = torch.from_numpy(train_select).to(device)
+        x_train_t = torch.from_numpy(train_select).to(device).float()
         x_train_t = x_train_t.permute(0, 2, 1)
 
         with torch.no_grad():
@@ -62,7 +62,7 @@ def main():
     while left < len(test_x):
         test_select = test_x[left:left + 16, ]
         test_select_y = test_y[left:left + 16]
-        x_test_t = torch.from_numpy(test_select).to(device)
+        x_test_t = torch.from_numpy(test_select).to(device).float()
         x_test_t = x_test_t.permute(0, 2, 1)
 
         with torch.no_grad():

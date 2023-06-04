@@ -9,7 +9,8 @@ ap.add_argument("--save_path", type=str)
 args = ap.parse_args()
 
 
-# nohup python get_point_mutants.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --save_path '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' > get_point_mutants.log 2>&1 &
+# nohup python get_point_mutants.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --save_path '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' > /dev/null 2>&1 &
+# nohup python get_point_mutants.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --save_path '/raid/yinghua/PCPrior/pkl_data/shapenet/x_all_mutants.pkl' > /dev/null 2>&1 &
 
 
 def get_mutation_point_feature(x, mutation_ratio, n_mutants):
