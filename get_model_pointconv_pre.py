@@ -16,12 +16,12 @@ ap.add_argument("--save_test_vec", type=str)
 args = ap.parse_args()
 
 # python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointconv_8.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_test_pre.pkl'
-
+# python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointconv_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_test_pre.pkl'
 
 def main():
 
     model = torch.load(args.model_path)
-    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:3' if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     x = pickle.load(open(args.path_x, 'rb'))

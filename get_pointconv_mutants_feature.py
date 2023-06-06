@@ -18,7 +18,7 @@ args = ap.parse_args()
 
 
 # nohup python get_pointconv_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/modelnet40_pointconv_8.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointconv_8_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointconv_8_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_test_pre.pkl' > /dev/null 2>&1 &
-
+# nohup python get_pointconv_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/shapenet_pointconv_2.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/shapenet/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointconv_2_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointconv_2_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_test_pre.pkl' > /dev/null 2>&1 &
 
 def get_diff_feature(target_y, y_pre):
     vec = []
@@ -31,7 +31,7 @@ def get_diff_feature(target_y, y_pre):
 
 
 def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, save_train_point_mutants_feature_vec, save_test_point_mutants_feature_vec, path_target_train_pre, path_target_test_pre):
-    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:3' if torch.cuda.is_available() else "cpu")
     data = pickle.load(open(path_x_all_mutants, 'rb'))
     y = pickle.load(open(path_y, 'rb'))
     model = torch.load(path_target_model)
