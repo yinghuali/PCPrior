@@ -16,7 +16,7 @@ def get_mixture_x(path_x, save_path):
         points = np.copy(x[i])
         select_points_idx = random.sample(range(len(points)), int(len(points) * 0.3))
         for idx in select_points_idx:
-            points[idx] += np.hstack((-1 + 2 * np.random.random((3)), np.array([0, 0, 0])))
+            points[idx] += np.hstack((-1*0.3 + 2*0.3 * np.random.random((3)), np.array([0, 0, 0])))
             points[idx] = np.around(points[idx], 4)
         mixture_x.append(points)
     mixture_x = np.array(mixture_x)
