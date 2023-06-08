@@ -14,6 +14,10 @@ from torch import nn
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet2_msg_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_msg_0_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_msg_0_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet2_ssg_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_ssg_0_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_ssg_0_test_pre.pkl'
 
+
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet_9.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_9_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_9_test_pre.pkl'
+
+
 import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("--cuda", type=str)
@@ -66,7 +70,7 @@ def main():
     all_pre_vec = []
 
     left = 0
-    while left < len(test_x):
+    while left < len(test_x)-1:
         test_select = test_x[left:left + 16, ]
         test_select_y = test_y[left:left + 16]
         x_test_t = torch.from_numpy(test_select).to(device).float()

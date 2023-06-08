@@ -71,7 +71,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
         train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
         left = 0
         all_pre_vec = []
-        while left < len(test_x):
+        while left < len(test_x)-1:
             test_select = test_x[left:left+16, ]
             x_test_t = torch.from_numpy(test_select).to(device)
             x_test_t = x_test_t.permute(0, 2, 1)

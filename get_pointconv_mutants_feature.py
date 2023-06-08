@@ -80,7 +80,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
         train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
         left = 0
         all_pre_vec = []
-        while left < len(test_x):
+        while left < len(test_x)-1:
             test_select = test_x[left:left + 16, ]
             x_test_t = test_select
             jittered_data = provider.random_scale_point_cloud(x_test_t[:, :, 0:3], scale_low=2.0 / 3,scale_high=3 / 2.0)

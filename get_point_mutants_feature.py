@@ -25,6 +25,10 @@ args = ap.parse_args()
 # nohup python get_point_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/shapenet_pointnet2_msg_0.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/shapenet/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointnet2_msg_0_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointnet2_msg_0_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_msg_0_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_msg_0_test_pre.pkl' > /dev/null 2>&1 &
 # nohup python get_point_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/shapenet_pointnet2_ssg_0.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/shapenet/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointnet2_ssg_0_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/shapenet/pointnet2_ssg_0_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_ssg_0_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet2_ssg_0_test_pre.pkl' > /dev/null 2>&1 &
 
+
+# # nohup python get_point_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/s3dis_pointnet_15.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/s3dis/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/s3dis/pointnet_15_train_point_mutants_feature_vec.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/s3dis/pointnet_15_test_point_mutants_feature_vec.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_15_train_pre.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_15_test_pre.pkl' > /dev/null 2>&1 &
+
+
 def get_diff_feature(target_y, y_pre):
     vec = []
     for i in range(len(target_y)):
@@ -76,7 +80,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
         train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
         left = 0
         all_pre_vec = []
-        while left < len(test_x):
+        while left < len(test_x)-1:
             test_select = test_x[left:left+16, ]
             x_test_t = torch.from_numpy(test_select).to(device).float()
             x_test_t = x_test_t.transpose(2, 1)
