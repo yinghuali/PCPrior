@@ -67,7 +67,7 @@ def main():
     all_pre_vec = []
 
     left = 0
-    while left < len(test_x)-1:
+    while left < len(test_x):
         test_select = test_x[left:left+16, ]
         test_select_y = test_y[left:left + 16]
         x_test_t = test_select
