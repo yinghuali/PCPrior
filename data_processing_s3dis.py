@@ -38,12 +38,19 @@ def extract_data(path_dir, save_x, save_y):
     dic = dict(zip(sorted(list(set(label_list))), range(len(set(label_list)))))
     label_list = [dic[i] for i in label_list]
     X = []
-    for i in path_list:
-        point_set = np.loadtxt(i, delimiter=' ').astype(np.float32)
-        point = farthest_point_sample(point_set, 1024)
-        X.append(point)
+    y = []
+    for i in range(len(path_list)):
+        try:
+            point_set = np.loadtxt(path_list[i], delimiter=' ').astype(np.float32)
+            point = farthest_point_sample(point_set, 1024)
+            X.append(point)
+            y.append(label_list[i])
+        except:
+            pass
+
     X = np.array(X)
-    y = np.array(label_list)
+    X = (X - np.min(X, axis=0)) / (np.max(X, axis=0) - np.min(X, axis=0))
+    y = np.array(y)
     pickle.dump(X, open(save_x, 'wb'), protocol=4)
     pickle.dump(y, open(save_y, 'wb'), protocol=4)
 
