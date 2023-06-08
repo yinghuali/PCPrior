@@ -16,6 +16,8 @@ from torch import nn
 
 
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet_15.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_15_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet_15_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet2_msg_8.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_msg_8_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_msg_8_test_pre.pkl'
+# python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet2_ssg_8.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_ssg_8_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_ssg_8_test_pre.pkl'
 
 import argparse
 ap = argparse.ArgumentParser()
