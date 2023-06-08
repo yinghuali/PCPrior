@@ -17,7 +17,7 @@ args = ap.parse_args()
 
 # python get_model_dgcnn_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_dgcnn_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_dgcnn_2_test_pre.pkl'
 # python get_model_dgcnn_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_dgcnn_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_dgcnn_0_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_dgcnn_0_test_pre.pkl'
-
+# python get_model_dgcnn_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_dgcnn_6.pt' --save_train_vec
 
 def main():
 
