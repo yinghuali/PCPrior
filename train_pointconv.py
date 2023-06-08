@@ -19,10 +19,10 @@ args = ap.parse_args()
 
 # python train_pointconv.py --k 40 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_model_path './target_models/modelnet40_pointconv'
 # python train_pointconv.py --k 50 --epochs 10 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl' --save_model_path './target_models/shapenet_pointconv'
-
+# python train_pointconv.py --k 13 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl' --save_model_path './target_models/s3dis_pointconv'
 
 def main():
-    device = torch.device('cuda:2' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:3' if torch.cuda.is_available() else "cpu")
 
     x = pickle.load(open(args.path_x, 'rb'))
     y = pickle.load(open(args.path_y, 'rb'))
