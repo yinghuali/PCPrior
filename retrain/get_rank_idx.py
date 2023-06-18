@@ -33,3 +33,20 @@ def Entropy_rank_idx(x):
     entropy_res = entropy(prob_dist, axis=1)
     entropy_rank_idx = np.argsort(entropy_res)[::-1]
     return entropy_rank_idx
+
+
+def Margin_rank_idx(x):
+    output_sort = np.sort(x)
+    margin_score = output_sort[:, -1] - output_sort[:, -2]
+    margin_rank_idx = margin_score.argsort()
+    return margin_rank_idx
+
+
+def LeastConfidence_rank_idx(x):
+    max_pre = x.max(1)
+    leastConfidence_rank_idx = np.argsort(max_pre)
+    return leastConfidence_rank_idx
+
+
+
+
