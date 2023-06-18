@@ -34,6 +34,7 @@ path_save_res = args.path_save_res
 
 # python pcprior.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2.json'
 
+
 def main():
     model = torch.load(path_target_model)
     x = pickle.load(open(path_x, 'rb'))
@@ -48,11 +49,11 @@ def main():
     space_feature_train_x = get_sapce_feature(train_x)
     space_feature_test_x = get_sapce_feature(test_x)
 
-    #pre_feature
+    # pre_feature
     pre_feature_train_x = pickle.load(open(path_target_model_train_pre, 'rb'))
     pre_feature_test_x = pickle.load(open(path_target_model_test_pre, 'rb'))
 
-    #uncertainty_feature
+    # uncertainty_feature
     uncertainty_feature_train_x = get_uncertainty_feature(pre_feature_train_x)
     uncertainty_feature_test_x = get_uncertainty_feature(pre_feature_test_x)
 
