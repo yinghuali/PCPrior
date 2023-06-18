@@ -48,5 +48,9 @@ def LeastConfidence_rank_idx(x):
     return leastConfidence_rank_idx
 
 
+def MP_rank_idx(x):
+    value = x.max(1)
+    mp_rank_idx = np.argsort(value)
+    return mp_rank_idx
 
 
