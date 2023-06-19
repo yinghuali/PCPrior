@@ -5,10 +5,7 @@ import argparse
 import json
 from sklearn.model_selection import train_test_split
 from get_rank_idx import *
-from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 ap = argparse.ArgumentParser()
@@ -32,7 +29,7 @@ path_train_point_mutants_feature = args.path_train_point_mutants_feature
 path_test_point_mutants_feature = args.path_test_point_mutants_feature
 path_save_res = args.path_save_res
 
-# python pcprior.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2.json'
+# python impact_pcprior.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2'
 
 
 def main():
@@ -68,16 +65,39 @@ def main():
 
     miss_train_label, miss_test_label, idx_miss_test_list = get_miss_lable(target_train_pre, target_test_pre, train_y, test_y)
 
-    model = LGBMClassifier(n_estimators=300)
-    model.fit(concat_train_all_feature, miss_train_label)
-    y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
-    lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
-    lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+    max_depth_list = [1, 3, 5, 7, 9]
+    colsample_bytree_list = [0.1, 0.3, 0.5, 0.7, 0.9]
+    learning_rate_list = [0.001, 0.01, 0.05, 0.1, 0.5]
+    dic_depth = {}
+    dic_colsample = {}
+    dic_learning = {}
+    for i in max_depth_list:
+        model = LGBMClassifier(max_depth=i)
+        model.fit(concat_train_all_feature, miss_train_label)
+        y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+        lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
+        lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        dic_depth[i] = lgb_apfd
 
+    for i in colsample_bytree_list:
+        model = LGBMClassifier(colsample_bytree=i)
+        model.fit(concat_train_all_feature, miss_train_label)
+        y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+        lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
+        lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        dic_colsample[i] = lgb_apfd
 
-    # json.dump(dic, open(path_save_res, 'w'), sort_keys=False, indent=4)
+    for i in learning_rate_list:
+        model = LGBMClassifier(learning_rate=i)
+        model.fit(concat_train_all_feature, miss_train_label)
+        y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
+        lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
+        lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        dic_learning[i] = lgb_apfd
 
-
+    json.dump(dic_depth, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
+    json.dump(dic_colsample, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
+    json.dump(dic_learning, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
 
 if __name__ == '__main__':
     main()
