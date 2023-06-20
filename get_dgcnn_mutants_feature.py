@@ -50,7 +50,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
         all_pre_vec = []
         while left < len(train_x):
             train_select = train_x[left:left+16, ]
-            x_train_t = torch.from_numpy(train_select).to(device)
+            x_train_t = torch.from_numpy(train_select).to(device).float()
             x_train_t = x_train_t.permute(0, 2, 1)
             with torch.no_grad():
                 pred = model(x_train_t)
@@ -74,7 +74,7 @@ def get_point_mutants_feature(path_target_model, path_x_all_mutants, path_y, sav
         all_pre_vec = []
         while left < len(test_x):
             test_select = test_x[left:left+16, ]
-            x_test_t = torch.from_numpy(test_select).to(device)
+            x_test_t = torch.from_numpy(test_select).to(device).float()
             x_test_t = x_test_t.permute(0, 2, 1)
             with torch.no_grad():
                 pred = model(x_test_t)
