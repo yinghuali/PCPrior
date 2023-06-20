@@ -1,12 +1,11 @@
 from feature_extraction import get_uncertainty_feature, get_sapce_feature
 import pickle
-import torch
 import argparse
 import json
 from sklearn.model_selection import train_test_split
-from get_rank_idx import *
 from lightgbm import LGBMClassifier
 from sklearn.metrics import accuracy_score
+from utils import *
 
 ap = argparse.ArgumentParser()
 
@@ -29,11 +28,8 @@ path_train_point_mutants_feature = args.path_train_point_mutants_feature
 path_test_point_mutants_feature = args.path_test_point_mutants_feature
 path_save_res = args.path_save_res
 
-# python impact_pcprior.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2'
-
 
 def main():
-    model = torch.load(path_target_model)
     x = pickle.load(open(path_x, 'rb'))
     y = pickle.load(open(path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
@@ -77,7 +73,9 @@ def main():
         y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
         lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
         lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        print(i, lgb_apfd)
         dic_depth[i] = lgb_apfd
+    json.dump(dic_depth, open(path_save_res + '_dic_depth.json', 'w'), sort_keys=False, indent=4)
 
     for i in colsample_bytree_list:
         model = LGBMClassifier(colsample_bytree=i)
@@ -85,7 +83,9 @@ def main():
         y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
         lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
         lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        print(i, lgb_apfd)
         dic_colsample[i] = lgb_apfd
+    json.dump(dic_colsample, open(path_save_res + '_dic_colsample.json', 'w'), sort_keys=False, indent=4)
 
     for i in learning_rate_list:
         model = LGBMClassifier(learning_rate=i)
@@ -93,11 +93,10 @@ def main():
         y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
         lgb_rank_idx = y_concat_all.argsort()[::-1].copy()
         lgb_apfd = apfd(idx_miss_test_list, lgb_rank_idx)
+        print(i, lgb_apfd)
         dic_learning[i] = lgb_apfd
+    json.dump(dic_learning, open(path_save_res+'_dic_learning.json', 'w'), sort_keys=False, indent=4)
 
-    json.dump(dic_depth, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
-    json.dump(dic_colsample, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
-    json.dump(dic_learning, open(path_save_res+'_dic_depth.json', 'w'), sort_keys=False, indent=4)
 
 if __name__ == '__main__':
     main()
