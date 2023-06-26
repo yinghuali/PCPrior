@@ -1,5 +1,4 @@
 
-
 python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_1.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_train_pre_mixture1.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_test_pre_mixture1.pkl'
 python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_2.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_train_pre_mixture2.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_test_pre_mixture2.pkl'
 python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_3.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointnet_0.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_train_pre_mixture3.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointnet_0_test_pre_mixture3.pkl'
@@ -58,7 +57,5 @@ python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shape
 python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_8.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointconv_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_train_pre_mixture8.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_test_pre_mixture8.pkl'
 python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_9.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointconv_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_train_pre_mixture9.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_test_pre_mixture9.pkl'
 python get_model_pointconv_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/mixture/X_10.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl'  --model_path './target_models/shapenet_pointconv_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_train_pre_mixture10.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/shapenet_pre/shapenet_pre_pointconv_2_test_pre_mixture10.pkl'
-
-
 
 

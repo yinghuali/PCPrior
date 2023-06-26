@@ -59,36 +59,3 @@ python get_pointconv_mutants_feature.py --path_target_model '/home/yinghua/pycha
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

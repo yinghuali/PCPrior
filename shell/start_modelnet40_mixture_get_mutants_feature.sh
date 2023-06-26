@@ -58,37 +58,3 @@ python get_pointconv_mutants_feature.py --path_target_model '/home/yinghua/pycha
 python get_pointconv_mutants_feature.py --path_target_model '/home/yinghua/pycharm/PCPrior/target_models/modelnet40_pointconv_8.pt' --path_x_all_mutants '/raid/yinghua/PCPrior/pkl_data/modelnet40/x_all_mutants.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --save_train_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointconv_8_train_point_mutants_feature_vec_mixture10.pkl' --save_test_point_mutants_feature_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointconv_8_test_point_mutants_feature_vec_mixture10.pkl' --path_target_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_train_pre_mixture10.pkl' --path_target_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointconv_8_test_pre_mixture10.pkl'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
