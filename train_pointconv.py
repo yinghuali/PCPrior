@@ -2,10 +2,10 @@ import pickle
 import torch
 import argparse
 import provider
+import torch.utils.data as Data
 from models.pointconv import PointConvDensityClsSsg as PointConvClsSsg
 from torch import nn, optim
 from tqdm import tqdm
-import torch.utils.data as Data
 from sklearn.model_selection import train_test_split
 ap = argparse.ArgumentParser()
 

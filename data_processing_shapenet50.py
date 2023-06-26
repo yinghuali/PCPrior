@@ -42,7 +42,7 @@ def get_path(path_dir_compile):
 def extract_data(path_dir, save_x, save_y):
     path_list = sorted(get_path(path_dir))
     path_lable_list = [i.replace('points', 'points_label').replace('.pts', '.seg') for i in path_list]
-    big_label_list = [i.split('/')[-3] for i in path_list] #[02691156, 02691157, ...]
+    big_label_list = [i.split('/')[-3] for i in path_list]  # [02691156, 02691157, ...]
     X = []
     label_list = []
     for i in range(len(path_list)):
@@ -76,4 +76,5 @@ def extract_data(path_dir, save_x, save_y):
     pickle.dump(y, open(save_y, 'wb'), protocol=4)
 
 
-extract_data('/raid/yinghua/PCPrior/shapenet', '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl', '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl')
+if __name__ == '__main__':
+    extract_data('/raid/yinghua/PCPrior/shapenet', '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl', '/raid/yinghua/PCPrior/pkl_data/shapenet/y.pkl')

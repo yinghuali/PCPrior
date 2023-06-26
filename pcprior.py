@@ -1,4 +1,3 @@
-from feature_extraction import get_uncertainty_feature, get_sapce_feature
 import pickle
 import torch
 import argparse
@@ -10,6 +9,7 @@ from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from feature_extraction import get_uncertainty_feature, get_sapce_feature
 
 ap = argparse.ArgumentParser()
 

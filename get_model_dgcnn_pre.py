@@ -1,11 +1,11 @@
 import pickle
 import torch
 import numpy as np
+import argparse
 from utils import *
 from sklearn.model_selection import train_test_split
 from torch import nn
 
-import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("--cuda", type=str)
 ap.add_argument("--path_x", type=str)

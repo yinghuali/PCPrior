@@ -45,7 +45,7 @@ def extract_data(path_dir, dic, save_x, save_y):
     label_list = [dic[i] for i in label_list]
     X = []
     for i in path_list:
-        point_set = np.loadtxt(i, delimiter=',').astype(np.float32) # (10000, 6)
+        point_set = np.loadtxt(i, delimiter=',').astype(np.float32)  # (10000, 6)
         point = farthest_point_sample(point_set, 1024)  # (1024, 6), 获取最远距离的1024个点
         X.append(point)
     X = np.array(X)
@@ -54,10 +54,7 @@ def extract_data(path_dir, dic, save_x, save_y):
     pickle.dump(y, open(save_y, 'wb'), protocol=4)
 
 
-#point_set = np.loadtxt('/Users/yinghua.li/Documents/Pycharm/PCPrior/data/door_0001.txt', delimiter=',').astype(np.float32) # (10000, 6)
-# point = farthest_point_sample(point_set, 1024)  # (1024, 6)
-
-
-extract_data('/raid/yinghua/PCPrior/modelnet40', dic_modelnet40, '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl', '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl')
+if __name__ == '__main__':
+    extract_data('/raid/yinghua/PCPrior/modelnet40', dic_modelnet40, '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl', '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl')
 
 

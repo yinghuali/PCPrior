@@ -55,7 +55,8 @@ def extract_data(path_dir, save_x, save_y):
     pickle.dump(y, open(save_y, 'wb'), protocol=4)
 
 
-extract_data('/raid/yinghua/PCPrior/Stanford3dDataset_v1.2_Aligned_Version', '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl', '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl')
+if __name__ == '__main__':
+    extract_data('/raid/yinghua/PCPrior/Stanford3dDataset_v1.2_Aligned_Version', '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl', '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl')
 
 
 

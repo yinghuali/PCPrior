@@ -1,11 +1,11 @@
 import pickle
 import torch
 import argparse
+import torch.utils.data as Data
 from models.pointnet_cls import get_model
 from torch import nn, optim
 from tqdm import tqdm
 from torch.autograd import Variable
-import torch.utils.data as Data
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 ap = argparse.ArgumentParser()
