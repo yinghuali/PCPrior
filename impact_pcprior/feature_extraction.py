@@ -37,5 +37,3 @@ def get_uncertainty_feature(x):
     return feature_vec.T
 
 
-
-
