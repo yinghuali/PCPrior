@@ -36,6 +36,3 @@ def get_uncertainty_feature(x):
     feature_vec = np.vstack((margin_score, gini_score, least_score, VanillaSoftmax_score, PCS_score, entropy_score))
     return feature_vec.T
 
-
-
-
