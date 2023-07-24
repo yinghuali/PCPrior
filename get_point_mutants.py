@@ -12,6 +12,7 @@ args = ap.parse_args()
 # nohup python get_point_mutants.py --path_x '/raid/yinghua/PCPrior/pkl_data/shapenet/X.pkl' --save_path '/raid/yinghua/PCPrior/pkl_data/shapenet/x_all_mutants.pkl' > /dev/null 2>&1 &
 # nohup python get_point_mutants.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --save_path '/raid/yinghua/PCPrior/pkl_data/s3dis/x_all_mutants.pkl' > /dev/null 2>&1 &
 
+
 def get_mutation_point_feature(x, mutation_ratio, n_mutants):
     all_mutants = []
     for _ in range(n_mutants):

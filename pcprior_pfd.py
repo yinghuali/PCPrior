@@ -44,7 +44,6 @@ def get_res_ratio_list(idx_miss_list, select_idx_list, select_ratio_list):
     return res_ratio_list
 
 
-
 def main():
     select_pfd =  [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
     model = torch.load(path_target_model)
