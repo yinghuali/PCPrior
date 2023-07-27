@@ -55,7 +55,7 @@ def main():
     train_point_mutants_feature = pickle.load(open(path_train_point_mutants_feature, 'rb'))
     test_point_mutants_feature = pickle.load(open(path_test_point_mutants_feature, 'rb'))
 
-    # pre_feature
+    # space_feature
     space_feature_train_x = get_sapce_feature(train_x)
     space_feature_test_x = get_sapce_feature(test_x)
 
