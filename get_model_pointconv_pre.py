@@ -7,7 +7,6 @@ from sklearn.model_selection import train_test_split
 from torch import nn
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--cuda", type=str)
 ap.add_argument("--path_x", type=str)
 ap.add_argument("--path_y", type=str)
 ap.add_argument("--model_path", type=str)

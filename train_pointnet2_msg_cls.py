@@ -58,7 +58,7 @@ def main():
             target = Variable(target).to(device)
 
             optimizer.zero_grad()
-            pred, trans_feat = classifier(points)  # pred: [8, 40], 8 是batch size， 40是样本的类别总数
+            pred, trans_feat = classifier(points)
             loss = criterion(pred, target)
             loss.backward()
             optimizer.step()

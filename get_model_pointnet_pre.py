@@ -6,6 +6,14 @@ from utils import *
 from sklearn.model_selection import train_test_split
 from torch import nn
 
+ap = argparse.ArgumentParser()
+ap.add_argument("--path_x", type=str)
+ap.add_argument("--path_y", type=str)
+ap.add_argument("--model_path", type=str)
+ap.add_argument("--save_train_vec", type=str)
+ap.add_argument("--save_test_vec", type=str)
+args = ap.parse_args()
+
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_msg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_msg_2_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'  --model_path './target_models/modelnet40_pointnet2_ssg_2.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet2_ssg_2_test_pre.pkl'
@@ -18,14 +26,6 @@ from torch import nn
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet2_msg_8.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_msg_8_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_msg_8_test_pre.pkl'
 # python get_model_pointnet_pre.py --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl'  --model_path './target_models/s3dis_pointnet2_ssg_8.pt' --save_train_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_ssg_8_train_pre.pkl' --save_test_vec '/raid/yinghua/PCPrior/pkl_data/s3dis_pre/s3dis_pre_pointnet2_ssg_8_test_pre.pkl'
 
-ap = argparse.ArgumentParser()
-ap.add_argument("--cuda", type=str)
-ap.add_argument("--path_x", type=str)
-ap.add_argument("--path_y", type=str)
-ap.add_argument("--model_path", type=str)
-ap.add_argument("--save_train_vec", type=str)
-ap.add_argument("--save_test_vec", type=str)
-args = ap.parse_args()
 
 
 def main():
