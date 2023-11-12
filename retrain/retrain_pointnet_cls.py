@@ -47,6 +47,7 @@ idx_np = np.array(list(range(len(x))))
 train_all_idx, test_all_idx_, _, _ = train_test_split(idx_np, y, test_size=0.3, random_state=17)
 train_idx, candidate_idx, _, _ = train_test_split(train_all_idx, train_y_, test_size=0.5, random_state=17)
 
+
 def get_compared_idx():
     deepGini_rank_idx = DeepGini_rank_idx(candidate_pre_feature_train_x)
     vanillasoftmax_rank_idx = VanillaSoftmax_rank_idx(candidate_pre_feature_train_x)
