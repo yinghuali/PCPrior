@@ -27,6 +27,7 @@ def main():
     x = pickle.load(open(args.path_x, 'rb'))
     y = pickle.load(open(args.path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
+    train_x, _, train_y, _ = train_test_split(train_x, train_y, test_size=0.5, random_state=17)
 
     x_train_t = torch.from_numpy(train_x).float()
     y_train_t = torch.from_numpy(train_y)
