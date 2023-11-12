@@ -41,8 +41,8 @@ path_save = args.path_save
 
 
 ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-# epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-epochs_list = [1]*10
+epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
 
 device = torch.device('cuda:1' if torch.cuda.is_available() else "cpu")
 x = pickle.load(open(path_x, 'rb'))
@@ -147,7 +147,7 @@ def model_pre(x, y, model):
 
 def get_retrain(rank_list):
     all_res = []
-    for _ in range(1):
+    for _ in range(10):
         model = torch.load(path_target_model)
         model = model.to(device)
         train_params = model.parameters()
