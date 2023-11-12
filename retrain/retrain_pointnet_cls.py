@@ -1,9 +1,6 @@
-from feature_extraction import get_uncertainty_feature, get_sapce_feature
-import pickle
 import torch
-import argparse
 import json
-from sklearn.model_selection import train_test_split
+import torch.nn.functional as F
 from get_rank_idx import *
 from lightgbm import LGBMClassifier
 from sklearn.metrics import accuracy_score
@@ -17,19 +14,55 @@ from tqdm import tqdm
 from torch.autograd import Variable
 import torch.utils.data as Data
 from sklearn.model_selection import train_test_split
-import torch.nn.functional as F
+from feature_extraction import get_uncertainty_feature, get_sapce_feature
 
 
-path_target_model = '../target_models/modelnet40_pointnet_2.pt'
-path_x = '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
-path_y = '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
+ap = argparse.ArgumentParser()
+ap.add_argument("--path_x", type=str)
+ap.add_argument("--path_y", type=str)
+ap.add_argument("--path_target_model", type=str)
+ap.add_argument("--path_target_model_train_pre", type=str)
+ap.add_argument("--path_target_model_test_pre", type=str)
+ap.add_argument("--path_train_point_mutants_feature", type=str)
+ap.add_argument("--path_test_point_mutants_feature", type=str)
+ap.add_argument("--path_save", type=str)
+args = ap.parse_args()
 
-path_target_model_train_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl'
-path_target_model_test_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
+# python pcprior.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2.json'
 
-path_train_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
-path_test_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
-path_save = './result/modelnet40_pointnet_2.json'
+# python retrain_pointnet_cls.py
+# --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
+# --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
+# --path_target_model './target_models/modelnet40_pointnet_2.pt'
+# --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl'
+# --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
+# --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
+# --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
+# --path_save_res './result/modelnet40_pointnet_2.json'
+
+
+# path_target_model = '../target_models/modelnet40_pointnet_2.pt'
+# path_x = '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
+# path_y = '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
+#
+# path_target_model_train_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl'
+# path_target_model_test_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
+#
+# path_train_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
+# path_test_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
+# path_save = './result/modelnet40_pointnet_2.json'
+
+path_target_model = args.path_target_model
+path_x = args.path_x
+path_y = args.path_y
+
+path_target_model_train_pre = args.path_target_model_train_pre
+path_target_model_test_pre = args.path_target_model_test_pre
+
+path_train_point_mutants_feature = args.path_train_point_mutants_feature
+path_test_point_mutants_feature = args.path_test_point_mutants_feature
+path_save = args.path_save
+
 
 ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -136,7 +169,7 @@ def model_pre(x, y, model):
 
 def get_retrain(rank_list):
     all_res = []
-    for _ in range(3):
+    for _ in range(10):
         model = torch.load(path_target_model)
         model = model.to(device)
         train_params = model.parameters()
