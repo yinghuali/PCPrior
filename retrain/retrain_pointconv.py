@@ -182,10 +182,6 @@ def get_retrain(rank_list):
             for e in range(epochs_list[i]):
                 for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
 
-                    if points.size(0) == 1:
-                        points = torch.cat([points, points], dim=0)
-                        target = torch.cat([target, target], dim=0)
-
                     points = points.data.numpy()
                     jittered_data = provider.random_scale_point_cloud(points[:, :, 0:3], scale_low=2.0 / 3, scale_high=3 / 2.0)
                     jittered_data = provider.shift_point_cloud(jittered_data, shift_range=0.2)
