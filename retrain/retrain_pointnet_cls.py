@@ -28,30 +28,6 @@ ap.add_argument("--path_test_point_mutants_feature", type=str)
 ap.add_argument("--path_save", type=str)
 args = ap.parse_args()
 
-# python retrain_pointnet_cls.py --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl' --path_target_model './target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './result/modelnet40_pointnet_2.json'
-
-# python retrain_pointnet_cls.py
-# --path_x '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
-# --path_y '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
-# --path_target_model './target_models/modelnet40_pointnet_2.pt'
-# --path_target_model_train_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl'
-# --path_target_model_test_pre '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
-# --path_train_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
-# --path_test_point_mutants_feature '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
-# --path_save_res './result/modelnet40_pointnet_2.json'
-
-
-# path_target_model = '../target_models/modelnet40_pointnet_2.pt'
-# path_x = '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
-# path_y = '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
-#
-# path_target_model_train_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_train_pre.pkl'
-# path_target_model_test_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/modelnet40_pre_pointnet_2_test_pre.pkl'
-#
-# path_train_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
-# path_test_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
-# path_save = './result/modelnet40_pointnet_2.json'
-
 path_target_model = args.path_target_model
 path_x = args.path_x
 path_y = args.path_y
@@ -192,10 +168,12 @@ def get_retrain(rank_list):
             y_train_t = torch.from_numpy(select_y_train)
 
             dataset = Data.TensorDataset(x_train_t, y_train_t)
-            trainDataLoader = Data.DataLoader(dataset=dataset, batch_size=500, shuffle=True)
+            trainDataLoader = Data.DataLoader(dataset=dataset, batch_size=16, shuffle=True)
 
             for e in range(epochs_list[i]):
                 for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
+                    if points.size(0) == 1:
+                        continue
                     points = points.transpose(2, 1)
                     points = Variable(points, requires_grad=True).to(device)
                     target = Variable(target).to(device)

@@ -177,9 +177,7 @@ def get_retrain(rank_list):
             for e in range(epochs_list[i]):
                 for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
                     if points.size(0) == 1:
-                        points = torch.cat([points, points], dim=0)
-                        target = torch.cat([target, target], dim=0)
-
+                        continue
                     points = points.permute(0, 2, 1)
                     optimizer.zero_grad()
                     points = points.to(device)

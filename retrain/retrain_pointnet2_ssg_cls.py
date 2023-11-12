@@ -1,6 +1,5 @@
 import torch
 import json
-import provider
 import torch.nn.functional as F
 from get_rank_idx import *
 from lightgbm import LGBMClassifier
@@ -42,7 +41,8 @@ path_save = args.path_save
 
 
 ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+epochs_list = [1]*10
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 x = pickle.load(open(path_x, 'rb'))
@@ -124,19 +124,11 @@ def model_pre(x, y, model):
     while left < len(x):
         train_select = x[left:left+16, ]
         train_select_y = y[left:left + 16]
-        x_train_t = train_select
-        jittered_data = provider.random_scale_point_cloud(x_train_t[:, :, 0:3], scale_low=2.0 / 3, scale_high=3 / 2.0)
-        jittered_data = provider.shift_point_cloud(jittered_data, shift_range=0.2)
-        x_train_t[:, :, 0:3] = jittered_data
-        x_train_t = provider.random_point_dropout_v2(x_train_t)
-        provider.shuffle_points(x_train_t)
-        x_train_t = torch.Tensor(x_train_t)
-
+        x_train_t = torch.from_numpy(train_select).to(device).float()
         x_train_t = x_train_t.transpose(2, 1)
-        x_train_t = x_train_t.to(device).float()
 
         with torch.no_grad():
-            pred = model(x_train_t[:, :3, :], x_train_t[:, 3:, :])
+            pred, trans_feat = model(x_train_t)
 
         probs = nn.Softmax(dim=1)(pred)
 
@@ -183,20 +175,11 @@ def get_retrain(rank_list):
                 for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
                     if points.size(0) == 1:
                         continue
-                    points = points.data.numpy()
-                    jittered_data = provider.random_scale_point_cloud(points[:, :, 0:3], scale_low=2.0 / 3, scale_high=3 / 2.0)
-                    jittered_data = provider.shift_point_cloud(jittered_data, shift_range=0.2)
-                    points[:, :, 0:3] = jittered_data
-                    points = provider.random_point_dropout_v2(points)
-                    provider.shuffle_points(points)
-                    points = torch.Tensor(points)
-
                     points = points.transpose(2, 1)
-                    points, target = points.to(device), target.to(device)
-
+                    points = Variable(points, requires_grad=True).to(device)
+                    target = Variable(target).to(device)
                     optimizer.zero_grad()
-                    pred = model(points[:, :3, :], points[:, 3:, :])
-
+                    pred, trans_feat = model(points)
                     loss = criterion(pred, target)
                     loss.backward()
                     optimizer.step()
