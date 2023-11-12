@@ -168,7 +168,6 @@ test/
 Results.ipynb
 tables/*
 ResultAnalysis.ipynb
-Results.ipynb
 featureresult/*
 README.txt
 PCPrior.pptx
@@ -179,3 +178,4 @@ efficiency.py
 feature_time.py
 ~$PCPrior.pptx
 time_cost.py
+retrain/result/*

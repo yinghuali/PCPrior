@@ -63,8 +63,6 @@ def get_compared_idx():
     return deepGini_rank_idx, vanillasoftmax_rank_idx, pcs_rank_idx, entropy_rank_idx, random_rank_idx
 
 
-
-
 def get_PCPrior_rank_idx():
     # point mutants feature
     train_point_mutants_feature_ = pickle.load(open(path_train_point_mutants_feature, 'rb'))
