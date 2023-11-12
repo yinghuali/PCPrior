@@ -20,7 +20,6 @@ from sklearn.model_selection import train_test_split
 import torch.nn.functional as F
 
 
-
 path_target_model = '../target_models/modelnet40_pointnet_2.pt'
 path_x = '/raid/yinghua/PCPrior/pkl_data/modelnet40/X.pkl'
 path_y = '/raid/yinghua/PCPrior/pkl_data/modelnet40/y.pkl'
@@ -30,8 +29,11 @@ path_target_model_test_pre = '/raid/yinghua/PCPrior/pkl_data/modelnet40_pre/mode
 
 path_train_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl'
 path_test_point_mutants_feature = '/raid/yinghua/PCPrior/pkl_data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl'
+path_save = './result/modelnet40_pointnet_2.json'
 
 ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+epochs_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
 device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 x = pickle.load(open(path_x, 'rb'))
 y = pickle.load(open(path_y, 'rb'))
@@ -51,13 +53,13 @@ def get_compared_idx():
     pcs_rank_idx = PCS_rank_idx(candidate_pre_feature_train_x)
     entropy_rank_idx = Entropy_rank_idx(candidate_pre_feature_train_x)
 
-    mp_rank_idx = MP_rank_idx(candidate_pre_feature_train_x)
-    leastconfidence_rank_idx = LeastConfidence_rank_idx(candidate_pre_feature_train_x)
-    margin_rank_idx = Margin_rank_idx(candidate_pre_feature_train_x)
+    # mp_rank_idx = MP_rank_idx(candidate_pre_feature_train_x)
+    # leastconfidence_rank_idx = LeastConfidence_rank_idx(candidate_pre_feature_train_x)
+    # margin_rank_idx = Margin_rank_idx(candidate_pre_feature_train_x)
 
     random_rank_idx = Random_rank_idx(candidate_pre_feature_train_x)
 
-    return deepGini_rank_idx, vanillasoftmax_rank_idx, pcs_rank_idx, entropy_rank_idx, mp_rank_idx, leastconfidence_rank_idx, margin_rank_idx, random_rank_idx
+    return deepGini_rank_idx, vanillasoftmax_rank_idx, pcs_rank_idx, entropy_rank_idx, random_rank_idx
 
 
 
@@ -135,7 +137,7 @@ def model_pre(x, y, model):
 
 def get_retrain(rank_list):
     all_res = []
-    for _ in range(5):
+    for _ in range(3):
         model = torch.load(path_target_model)
         model = model.to(device)
         train_params = model.parameters()
@@ -144,8 +146,6 @@ def get_retrain(rank_list):
         criterion.to(device)
 
         acc_list = []
-        # acc = model_pre(test_x, test_y, model)
-        # print('=====', acc, '======')
 
         for i in range(len(ratio_list)):
             model.train()
@@ -162,16 +162,16 @@ def get_retrain(rank_list):
             dataset = Data.TensorDataset(x_train_t, y_train_t)
             trainDataLoader = Data.DataLoader(dataset=dataset, batch_size=500, shuffle=True)
 
-            all_correct = 0
-            for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
-                points = points.transpose(2, 1)
-                points = Variable(points, requires_grad=True).to(device)
-                target = Variable(target).to(device)
-                optimizer.zero_grad()
-                pred, trans_feat = model(points)
-                loss = criterion(pred, target)
-                loss.backward()
-                optimizer.step()
+            for e in range(epochs_list[i]):
+                for batch_id, (points, target) in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
+                    points = points.transpose(2, 1)
+                    points = Variable(points, requires_grad=True).to(device)
+                    target = Variable(target).to(device)
+                    optimizer.zero_grad()
+                    pred, trans_feat = model(points)
+                    loss = criterion(pred, target)
+                    loss.backward()
+                    optimizer.step()
 
             acc = model_pre(test_x, test_y, model)
             acc_list.append(acc)
@@ -180,23 +180,38 @@ def get_retrain(rank_list):
         all_res.append(acc_list)
 
     all_res = np.array(all_res)
-    all_res = np.mean(all_res, axis=0)
+    # all_res = np.mean(all_res, axis=0)
+    all_res = np.max(all_res, axis=0)
     print('===========')
     print(all_res)
     print('===========')
     return list(all_res)
 
 
-# pcprior_rank_idx = get_PCPrior_rank_idx()
-deepGini_rank_idx, vanillasoftmax_rank_idx, pcs_rank_idx, entropy_rank_idx, mp_rank_idx, leastconfidence_rank_idx, margin_rank_idx, random_rank_idx = get_compared_idx()
+def main():
+
+    deepGini_rank_idx, vanillasoftmax_rank_idx, pcs_rank_idx, entropy_rank_idx, random_rank_idx = get_compared_idx()
+    lgb_rank_idx = get_PCPrior_rank_idx()
+
+    deepGini_res = get_retrain(deepGini_rank_idx)
+    vanillasoftmax_res = get_retrain(vanillasoftmax_rank_idx)
+    pcs_res = get_retrain(pcs_rank_idx)
+    entropy_res = get_retrain(entropy_rank_idx)
+    random_res = get_retrain(random_rank_idx)
+    lgb_res = get_retrain(lgb_rank_idx)
+
+    dic = {
+        'random_res': random_res,
+        'deepGini_res': deepGini_res,
+        'vanillasoftmax_res': vanillasoftmax_res,
+        'pcs_res': pcs_res,
+        'entropy_res': entropy_res,
+        'lgb_res': lgb_res,
+    }
+
+    json.dump(dic, open(path_save, 'w'), sort_keys=False, indent=4)
 
 
-deepGini_res = get_retrain(deepGini_rank_idx)
-random_res = get_retrain(random_rank_idx)
-
-
-print('====deepGini_res======')
-print(deepGini_res)
-print('====random_res======')
-print(random_res)
+if __name__ == '__main__':
+    main()
 
