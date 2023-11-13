@@ -145,7 +145,7 @@ def model_pre(x, y, model):
 
 def get_retrain(rank_list):
     all_res = []
-    for _ in range(10):
+    for _ in range(3):
         model = torch.load(path_target_model)
         model = model.to(device)
         train_params = model.parameters()
