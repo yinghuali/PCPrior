@@ -78,3 +78,10 @@ def get_model_path(path_dir_compile):
                 if file_absolute_path.endswith('.pt'):
                     path_list.append(file_absolute_path)
     return path_list
+
+
+def effect_size_paired(x1, x2):
+    diff = np.array(x1) - np.array(x2)
+    mean_diff = np.mean(diff)
+    std_diff = np.std(diff, ddof=1)
+    return mean_diff / std_diff
