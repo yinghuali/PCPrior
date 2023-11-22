@@ -179,3 +179,4 @@ feature_time.py
 ~$PCPrior.pptx
 time_cost.py
 retrain/result/*
+retrain/*
