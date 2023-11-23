@@ -180,3 +180,4 @@ feature_time.py
 time_cost.py
 retrain/result/*
 retrain/*
+result_dnn/*
