@@ -7,6 +7,8 @@ from get_rank_idx import *
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from feature_extraction import get_uncertainty_feature, get_sapce_feature
+from tensorflow.keras import models
+from tensorflow.keras import layers
 
 ap = argparse.ArgumentParser()
 
@@ -28,6 +30,14 @@ path_target_model_test_pre = args.path_target_model_test_pre
 path_train_point_mutants_feature = args.path_train_point_mutants_feature
 path_test_point_mutants_feature = args.path_test_point_mutants_feature
 path_save_res = args.path_save_res
+
+
+def get_DNN():
+    model = models.Sequential()
+    model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))
+    model.add(layers.Dense(16, activation='relu'))
+    model.add(layers.Dense(1, activation='sigmoid'))
+
 
 
 def main():
@@ -68,10 +78,6 @@ def main():
     model.fit(concat_train_all_feature, miss_train_label)
     y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
     lr_rank_idx = y_concat_all.argsort()[::-1].copy()
-
-
-
-
     lr_apfd = apfd(idx_miss_test_list, lr_rank_idx)
 
 
