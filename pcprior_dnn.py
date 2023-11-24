@@ -1,14 +1,16 @@
 import pickle
 import torch
 import argparse
+import os
 import json
 from sklearn.model_selection import train_test_split
 from get_rank_idx import *
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from feature_extraction import get_uncertainty_feature, get_sapce_feature
 from tensorflow.keras import models
 from tensorflow.keras import layers
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 
 ap = argparse.ArgumentParser()
 
@@ -32,12 +34,19 @@ path_test_point_mutants_feature = args.path_test_point_mutants_feature
 path_save_res = args.path_save_res
 
 
-def get_DNN():
-    model = models.Sequential()
-    model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))
-    model.add(layers.Dense(16, activation='relu'))
-    model.add(layers.Dense(1, activation='sigmoid'))
+def write_result(content, file_name):
+    re = open(file_name, 'a')
+    re.write('\n' + content)
+    re.close()
 
+
+def DNN(x):
+    model = models.Sequential()
+    model.add(layers.Dense(64, activation='relu', input_shape=(x.shape[1],)))
+    model.add(layers.Dense(32, activation='relu'))
+    model.add(layers.Dense(1, activation='sigmoid'))
+    model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
+    return model
 
 
 def main():
@@ -73,20 +82,17 @@ def main():
 
     miss_train_label, miss_test_label, idx_miss_test_list = get_miss_lable(target_train_pre, target_test_pre, train_y, test_y)
 
+    model = DNN(concat_train_all_feature)
+    model.fit(concat_train_all_feature, miss_train_label, epochs=20, batch_size=32)
+    y_concat_all = model.predict(concat_test_all_feature)
+    y_concat_all = np.array([i[0] for i in y_concat_all])
 
-    model = LogisticRegression()
-    model.fit(concat_train_all_feature, miss_train_label)
-    y_concat_all = model.predict_proba(concat_test_all_feature)[:, 1]
-    lr_rank_idx = y_concat_all.argsort()[::-1].copy()
-    lr_apfd = apfd(idx_miss_test_list, lr_rank_idx)
+    dnn_rank_idx = y_concat_all.argsort()[::-1].copy()
+    dnn_apfd = apfd(idx_miss_test_list, dnn_rank_idx)
 
-
+    path_save = path_save_res.split('/')[-1].replace('.json', '')
+    write_result(path_save+'->'+str(dnn_apfd), './result_dnn/result_dnn.txt')
 
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
