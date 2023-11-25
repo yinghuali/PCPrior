@@ -181,3 +181,4 @@ time_cost.py
 retrain/result/*
 retrain/*
 result_dnn/*
+scp.sh
