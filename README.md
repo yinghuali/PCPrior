@@ -13,7 +13,7 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     example: scripts to obtain the experimental results of the paper.
     impact_pcprior: scripts of parameter analysis.
     importance: results of feature importance.
-    models: scripts of 3D 3D point clouds classification models.
+    models: scripts of 3D point clouds classification models.
     result: experimental results of the paper.
     retrain: scripts of retraining.
     target_models: the evaluated 3D classification models.
