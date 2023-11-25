@@ -51,9 +51,8 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
 ## How to run PCPrior
 ### Step1: Download the dataset:  
 https://zenodo.org/records/10206303  
-This dataset includes processed 3D point clouds and extracted features.
+This dataset includes processed 3D point clouds and extracted features.  
+Please unpack the dataset and place the extracted data in the PCPrior directory.
 
 ### Step2: Run PCPrior  
 ```sh run_PCPrior.sh```
-
-
