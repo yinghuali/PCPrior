@@ -46,7 +46,7 @@ def get_res_ratio_list(idx_miss_list, select_idx_list, select_ratio_list):
 
 def main():
     select_pfd =  [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-    model = torch.load(path_target_model)
+    # model = torch.load(path_target_model)
     x = pickle.load(open(path_x, 'rb'))
     y = pickle.load(open(path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
