@@ -16,6 +16,7 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     models: scripts of 3D classification models.
     result: experimental results of the paper.
     retrain: scripts of retraining.
+    target_models: the evaluated 3D classification models.
     ----------------------
     ablation_study.py: script for ablation study.
     config.py: configuration script.

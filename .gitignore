@@ -182,4 +182,6 @@ retrain/result/*
 retrain/*
 result_dnn/*
 scp.sh
-target_models/*
+target_models/modelnet40_pointconv_8.pt
+target_models/shapenet_pointconv_2.pt
+target_models/s3dis_pointconv_10.pt
