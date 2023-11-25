@@ -53,13 +53,31 @@ To set up the environment, please simply run
 ## How to run PCPrior
 ### Step1: Download the dataset:  
 https://zenodo.org/records/10206303  
-This dataset includes processed 3D point clouds and extracted features.  
-Please unpack the dataset and place the extracted data in the PCPrior directory.
-
+This dataset includes processed 3D point clouds and extracted features.    
+Please unpack the dataset and place the extracted data in the PCPrior directory.  
 ### Step2: Run PCPrior  
 ```sh run_PCPrior.sh```
 
-## Docker
+## How to use Docker run PCPrior
+We have created a Docker image for the PCPrior project and pushed it to Docker Hub.  
+The following are the steps for running PCPrior using Docker.
+
+### Step1: Download the dataset: 
+Download the dataset using the following commands:
 ```
-docker run pcprior python3 ./PCPrior/pcprior.py --path_x './PCPrior/data/modelnet40/X.pkl' --path_y './PCPrior/data/modelnet40/y.pkl' --path_target_model './PCPrior/target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './PCPrior/result/modelnet40_pointnet_2.json'
+wget https://zenodo.org/records/10206303/files/data.zip?download=1
+unzip 'data.zip?download=1'
 ```
+### Step2: Pull PCPrior Docker image: 
+Pull the PCPrior Docker image from Docker Hub using the following command:
+```
+docker pull yinghual/pcprior:latest
+```
+### Step3: Using docker run PCPrior
+This is an example of running pcprior on PointNet models with the ModelNet dataset.  
+**Please note, in the command below, the path provided with -v must be the full path of data**.
+
+```
+docker run -v /your_absolute_path/data/modelnet40:/data/modelnet40 yinghual/pcprior python3 ./PCPrior/pcprior.py --path_x '/data/modelnet40/X.pkl' --path_y '/data/modelnet40/y.pkl' --path_target_model './PCPrior/target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/data/modelnet40/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/data/modelnet40/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './PCPrior/result/modelnet40_pointnet_2.json'
+```
+Please make sure to replace the placeholders (your_absolute_path) with your actual file paths.
