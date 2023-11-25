@@ -14,6 +14,7 @@
     importance: results of feature importance.
     models: scripts of 3D classification models.
     result: experimental results of the paper.
+    retrain: scripts of retraining.
     ----------------------
     ablation_study.py: script for ablation study.
     config.py: configuration script.
@@ -37,7 +38,14 @@
     pcprior_pfd.py: script of PCPrior for obtaining PFD.
     pcprior_tabnet.py: script of PCPrior using the TabNet ranking model for obtaining APFD.
     pcprior_tabnet_pfd.py: script of PCPrior using the TabNet ranking model for obtaining PFD.
-    provider.py: 
+    provider.py: model related script.
+    train_dgcnn.py: script of traing DGCNN model.
+    train_pointconv.py: script of traing PointConv model.
+    train_pointnet2_msg_cls.py: script of traing MSG model.
+    train_pointnet2_ssg_cls.py: script of traing SSG model.
+    train_pointnet_cls.py: script of traing PointNet model.
+    utils.py: tool script.
+    
     
     
     
