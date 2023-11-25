@@ -1,4 +1,5 @@
-# PCPrior is a test prioritization approach specifically for 3D Point Clouds.
+# PCPrior
+PCPrior is a test prioritization approach specifically for 3D Point Clouds.
 
 ## Main Requirements
     PyTorch 2.0.0
