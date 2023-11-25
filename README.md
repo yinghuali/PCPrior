@@ -1,4 +1,5 @@
-# Source Code of PCPrior
+# PCPrior is a test prioritization approach specifically for 3D Point Clouds.
+
 ## Main Requirements
     PyTorch 2.0.0
     TensorFlow 2.5.1
