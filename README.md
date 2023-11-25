@@ -25,27 +25,27 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     feature_extraction.py: script for obtaining space fearure and uncertainty feature.
     feature_importance.py: script of feature importance.
     get_dgcnn_mutants_feature.py: script for obtaining mutants feaure of DGCNN model.
-    get_model_dgcnn_pre.py: script for obtaining prediction feaure of DGCNN model.
-    get_model_pointconv_pre.py: script for obtaining prediction feaure of PointConv model.
+    get_model_dgcnn_pre.py: script for obtaining prediction feature from DGCNN model.
+    get_model_pointconv_pre.py: script for obtaining prediction feature from PointConv model.
     get_model_pointnet_pre.py: script for obtaining prediction feaure of MSG, SSG and PointNet models.
     get_point_mixture.py: script for obtaining noisy datasets.
-    get_point_mutants.py: script for obtaining 3D point clouds mutants datasets.
+    get_point_mutants.py: script for obtaining 3D point cloud mutants datasets.
     get_point_mutants_feature.py: script for obtaining mutants feature of MSG,SSG and PointNet models.
     get_pointconv_mutants_feature.py: script for obtaining mutants feature of PointConv model.
-    get_rank_idx.py: script of uncertainty approaches.
+    get_rank_idx.py: script for uncertainty approaches.
     pcprior.py: script of PCPrior for obtaining APFD.
     pcprior_dnn.py: script of PCPrior using a DNN ranking model for obtaining APFD.
     pcprior_dnn_pfd.py: script of PCPrior using a DNN ranking model for obtaining PFD.
     pcprior_pfd.py: script of PCPrior for obtaining PFD.
     pcprior_tabnet.py: script of PCPrior using the TabNet ranking model for obtaining APFD.
     pcprior_tabnet_pfd.py: script of PCPrior using the TabNet ranking model for obtaining PFD.
-    provider.py: model related script.
+    provider.py: script related to models.
     train_dgcnn.py: script of traing DGCNN model.
     train_pointconv.py: script of traing PointConv model.
     train_pointnet2_msg_cls.py: script of traing MSG model.
     train_pointnet2_ssg_cls.py: script of traing SSG model.
     train_pointnet_cls.py: script of traing PointNet model.
-    utils.py: tool script.
+    utils.py: script for tools.
     
     
     
