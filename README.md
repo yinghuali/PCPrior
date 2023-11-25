@@ -60,4 +60,6 @@ Please unpack the dataset and place the extracted data in the PCPrior directory.
 ```sh run_PCPrior.sh```
 
 ## Docker
-``docker run pcprior python3 ./PCPrior/pcprior.py --path_x './PCPrior/data/modelnet40/X.pkl' --path_y './PCPrior/data/modelnet40/y.pkl' --path_target_model './PCPrior/target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './PCPrior/result/modelnet40_pointnet_2.json'``
+```
+docker run pcprior python3 ./PCPrior/pcprior.py --path_x './PCPrior/data/modelnet40/X.pkl' --path_y './PCPrior/data/modelnet40/y.pkl' --path_target_model './PCPrior/target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre './PCPrior/data/modelnet40/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature './PCPrior/data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './PCPrior/result/modelnet40_pointnet_2.json'
+```
