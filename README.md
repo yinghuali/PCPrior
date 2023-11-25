@@ -48,11 +48,12 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     train_pointnet_cls.py: script of traing PointNet model.
     utils.py: script for tools.
     
-    
-    
-    
-    
-    
-    
-    
-    
+## How to run PCPrior
+### Step1: Download the dataset:  
+https://zenodo.org/records/10206303  
+This dataset includes processed 3D point clouds and extracted features.
+
+### Step2: Run PCPrior  
+```sh run_PCPrior.sh```
+
+
