@@ -21,3 +21,16 @@
     data_processing_s3dis.py: script for obtaining the S3DIS structured dataset.
     data_processing_shapenet50.py: script for obtaining the ShapeNet structured dataset.
     feature_extraction.py: script for obtaining space fearure and uncertainty feature.
+    feature_importance.py: script of feature importance.
+    get_dgcnn_mutants_feature.py: script for obtaining mutants feaure of DGCNN model.
+    get_model_dgcnn_pre.py: script for obtaining prediction feaure of DGCNN model.
+    get_model_pointconv_pre.py: script for obtaining prediction feaure of PointConv model.
+    get_model_pointnet_pre.py: script for obtaining prediction feaure of MSG, SSG and PointNet models.
+    get_point_mixture.py: script for obtaining noisy datasets.
+    get_point_mutants.py: script for obtaining 3D point clouds mutants datasets.
+    get_point_mutants_feature.py: 
+    
+    
+    
+    
+    
