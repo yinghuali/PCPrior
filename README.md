@@ -28,7 +28,19 @@
     get_model_pointnet_pre.py: script for obtaining prediction feaure of MSG, SSG and PointNet models.
     get_point_mixture.py: script for obtaining noisy datasets.
     get_point_mutants.py: script for obtaining 3D point clouds mutants datasets.
-    get_point_mutants_feature.py: 
+    get_point_mutants_feature.py: script for obtaining mutants feature of MSG,SSG and PointNet models.
+    get_pointconv_mutants_feature.py: script for obtaining mutants feature of PointConv model.
+    get_rank_idx.py: script of uncertainty approaches.
+    pcprior.py: script of PCPrior for obtaining APFD.
+    pcprior_dnn.py: script of PCPrior using a DNN ranking model for obtaining APFD.
+    pcprior_dnn_pfd.py: script of PCPrior using a DNN ranking model for obtaining PFD.
+    pcprior_pfd.py: script of PCPrior for obtaining PFD.
+    pcprior_tabnet.py: script of PCPrior using the TabNet ranking model for obtaining APFD.
+    pcprior_tabnet_pfd.py: script of PCPrior using the TabNet ranking model for obtaining PFD.
+    provider.py: 
+    
+    
+    
     
     
     
