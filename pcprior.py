@@ -1,5 +1,4 @@
 import pickle
-import torch
 import argparse
 import json
 from sklearn.model_selection import train_test_split
@@ -34,7 +33,6 @@ path_save_res = args.path_save_res
 
 
 def main():
-    # model = torch.load(path_target_model)
     x = pickle.load(open(path_x, 'rb'))
     y = pickle.load(open(path_y, 'rb'))
     train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=17)
