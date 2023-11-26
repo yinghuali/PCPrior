@@ -52,29 +52,29 @@ To set up the environment, please simply run
     utils.py: script for tools.
     
 ## How to run PCPrior
-### Step1: Download the dataset:  
+#### Step1: Download the dataset:  
 https://zenodo.org/records/10206303  
 This dataset includes processed 3D point clouds and extracted features.    
 Please unpack the dataset and place the extracted data in the PCPrior directory.  
-### Step2: Run PCPrior  
+#### Step2: Run PCPrior  
 ```sh run_PCPrior.sh```
 
 ## How to use Docker run PCPrior
 We have created a Docker image for the PCPrior project and pushed it to Docker Hub.  
 The following are the steps for running PCPrior using Docker.
 
-### Step1: Download the dataset: 
+#### Step1: Download the dataset: 
 Download the dataset using the following commands:
 ```
 wget https://zenodo.org/records/10206303/files/data.zip?download=1
 unzip 'data.zip?download=1'
 ```
-### Step2: Pull PCPrior Docker image: 
+#### Step2: Pull PCPrior Docker image: 
 Pull the PCPrior Docker image from Docker Hub using the following command:
 ```
 docker pull yinghual/pcprior:latest
 ```
-### Step3: Using docker run PCPrior
+#### Step3: Using docker run PCPrior
 This is an example of running pcprior on PointNet models with the ModelNet dataset.  
 **Please note, in the command below, the path provided with -v must be the full path of data**.
 
