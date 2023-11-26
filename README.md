@@ -9,7 +9,7 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     LighGBM 3.3.5
     pytorch-tabnet 4.1.0
     scikit-learn 1.0.2
-To set up the environment, please simply run  
+To set up the environment, please run  
 ```pip install -r requirements.txt```
 
 ##  Repository catalogue
@@ -54,8 +54,8 @@ To set up the environment, please simply run
 ## How to run PCPrior
 #### Step1: Download the dataset:  
 https://zenodo.org/records/10206303  
-This dataset includes processed 3D point clouds and extracted features.    
-Please unpack the dataset and place the extracted data in the PCPrior directory.  
+This dataset includes all the 3D point cloud data and generated features.   
+Please unpack the dataset and place the extracted data in the PCPrior directory. 
 #### Step2: Run PCPrior  
 ```sh run_PCPrior.sh```
 
