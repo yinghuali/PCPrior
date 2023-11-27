@@ -24,7 +24,7 @@ args = ap.parse_args()
 
 
 def main():
-    device = torch.device('cuda:1' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 
     x = pickle.load(open(args.path_x, 'rb'))
     y = pickle.load(open(args.path_y, 'rb'))

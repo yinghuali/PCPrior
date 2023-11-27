@@ -23,7 +23,7 @@ args = ap.parse_args()
 # python train_pointnet2_ssg_cls.py --k 13 --epochs 11 --batch_size 16  --path_x '/raid/yinghua/PCPrior/pkl_data/s3dis/X.pkl' --path_y '/raid/yinghua/PCPrior/pkl_data/s3dis/y.pkl' --save_model_path './target_models/s3dis_pointnet2_ssg'
 
 def main():
-    device = torch.device('cuda:2' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 
     x = pickle.load(open(args.path_x, 'rb'))
     y = pickle.load(open(args.path_y, 'rb'))
