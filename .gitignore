@@ -185,3 +185,6 @@ scp.sh
 target_models/modelnet40_pointconv_8.pt
 target_models/shapenet_pointconv_2.pt
 target_models/s3dis_pointconv_10.pt
+repeat_models.sh
+repeat_result/*
+repeat_model.sh
