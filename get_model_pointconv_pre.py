@@ -22,7 +22,7 @@ args = ap.parse_args()
 def main():
 
     model = torch.load(args.model_path)
-    device = torch.device('cuda:3' if torch.cuda.is_available() else "cpu")
+    device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     x = pickle.load(open(args.path_x, 'rb'))
