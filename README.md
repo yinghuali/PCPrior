@@ -9,8 +9,6 @@ PCPrior is a test prioritization approach specifically for 3D Point Clouds.
     LighGBM 3.3.5
     pytorch-tabnet 4.1.0
     scikit-learn 1.0.2
-To set up the environment, please run  
-```pip install -r requirements.txt```
 
 ##  Repository catalogue
     example: scripts to obtain the experimental results of the paper.
