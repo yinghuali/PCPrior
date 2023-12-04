@@ -57,7 +57,7 @@ Please unpack the dataset and place the extracted data in the PCPrior directory.
 #### Step2: Run PCPrior  
 ```sh run_PCPrior.sh```
 
-## How to use Docker run PCPrior
+## How to use Docker to run PCPrior
 We have created a Docker image for the PCPrior project and pushed it to Docker Hub.  
 The following are the steps for running PCPrior using Docker.
 
