@@ -80,3 +80,20 @@ This is an example of running pcprior on PointNet models with the ModelNet datas
 docker run -v /your_absolute_path/data/modelnet40:/data/modelnet40 yinghual/pcprior python3 ./PCPrior/pcprior.py --path_x '/data/modelnet40/X.pkl' --path_y '/data/modelnet40/y.pkl' --path_target_model './PCPrior/target_models/modelnet40_pointnet_2.pt' --path_target_model_train_pre '/data/modelnet40/modelnet40_pre_pointnet_2_train_pre.pkl' --path_target_model_test_pre '/data/modelnet40/modelnet40_pre_pointnet_2_test_pre.pkl' --path_train_point_mutants_feature '/data/modelnet40/pointnet_2_train_point_mutants_feature_vec.pkl' --path_test_point_mutants_feature '/data/modelnet40/pointnet_2_test_point_mutants_feature_vec.pkl' --path_save_res './PCPrior/result/modelnet40_pointnet_2.json'
 ```
 Please make sure to replace the placeholders (your_absolute_path) with your actual file path.
+
+## Reference
+If our project is helpful to you, please consider citing our paper.
+```
+@article{pcprior,
+  title = {Test Input Prioritization for 3D Point Clouds},
+  author = {Li, Yinghua and Dang, Xueqi and Ma, Lei and Klein, Jacques and Traon, Yves LE and Bissyand\'{e}, Tegawend\'{e} F.},
+  journal={ACM Transactions on Software Engineering and Methodology},
+  year = {2024},
+  month = {jan},
+  issn = {1049-331X},
+  url = {https://doi.org/10.1145/3643676},
+  doi = {10.1145/3643676},
+  publisher={ACM New York, NY, USA}
+}
+```
+
